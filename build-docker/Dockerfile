@@ -1,6 +1,12 @@
 FROM alpine:edge
 MAINTAINER pauloamgomes <pauloamgomes@gmail.com>
 
+ENV MOODLE_VERSION ${MOODLE_VERSION}
+ENV MOODLE_HOSTNAME ${MOODLE_HOSTNAME}
+ENV MOODLE_DB_NAME ${MOODLE_DB_NAME}
+ENV MOODLE_USER ${MOODLE_USER}
+ENV MOODLE_PASS ${MOODLE_PASS}
+
 # Install packages
 RUN echo 'http://alpine.gliderlabs.com/alpine/edge/main' > /etc/apk/repositories && \
     echo 'http://alpine.gliderlabs.com/alpine/edge/community' >> /etc/apk/repositories && \
@@ -141,23 +147,14 @@ RUN sed -i -e"s/user nginx/user www-data/" /etc/nginx/nginx.conf && \
 # Create user www-data
 RUN adduser -u 82 -D -S -G www-data www-data
 
-WORKDIR /var/www/moodle
-VOLUME /var/www/moodle
-EXPOSE 80 443
-
-# Download moodle and extract it
-RUN  curl https://codeload.github.com/moodle/moodle/tar.gz/v3.2.1 -o /tmp/moodle-latest-32.tgz && \
-    tar xfz /tmp/moodle-latest-32.tgz -C /tmp && \
-    mv /tmp/moodle-3.2.1 /var/www/moodle/html && \
-    mkdir /var/www/moodle/data && \
-    chown -R www-data:www-data /var/www/moodle
-
 # Copy supervisor config
 COPY config/supervisord.conf /etc/supervisord.conf
 
 # Copy entrypoint
 COPY docker-entrypoint.sh /
 
-RUN du -sh /var/www/moodle > /tmp/status.txt
+WORKDIR /var/www/moodle
+VOLUME /var/www/moodle
+EXPOSE 80 443
 
 ENTRYPOINT ["/docker-entrypoint.sh"]

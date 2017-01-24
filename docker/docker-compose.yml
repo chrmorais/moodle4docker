@@ -24,6 +24,13 @@ services:
 
   moodle:
     image: 'pauloamgomes/moodle-php:latest'
+    # Moodle version (e.g. 3.1.4, 3.2.1)
+    environment:
+      MOODLE_VERSION: "3.1.4"
+      MOODLE_HOSTNAME: "localhost"
+      MOODLE_DB_NAME: "moodle"
+      MOODLE_USER: "admin"
+      MOODLE_PASS: "admin123"
     ports:
       - "80:80"
       - "443:443"
