@@ -1,0 +1,37 @@
+version: '2'
+services:
+
+  moodle_db:
+    image: mariadb
+    command: mysqld --innodb-buffer-pool-size=20M
+    environment:
+      - "MYSQL_ALLOW_EMPTY_PASSWORD=yes"
+
+  pma:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: moodle_db
+      PMA_USER: root
+      PHP_UPLOAD_MAX_FILESIZE: 1G
+      PHP_MAX_INPUT_VARS: 1G
+    ports:
+     - "8001:80"
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "8002:8025"
+
+  moodle:
+    image: 'pauloamgomes/moodle-php:latest'
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - moodle-unison-sync:/var/www/moodle:rw
+    depends_on:
+      - moodle_db
+
+volumes:
+  moodle-unison-sync:
+    external: true

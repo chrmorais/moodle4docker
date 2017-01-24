@@ -1,0 +1,9 @@
+www/*
+!www/.gitkeep
+
+# Mac filesystem
+._.DS_Store
+.DS_Store
+
+# Unison FS temp file
+.unison.._.DS_Store*
