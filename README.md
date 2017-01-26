@@ -8,7 +8,7 @@ Clone or download the repo:
 ```bash
 $ wget https://github.com/pauloamgomes/moodle4docker/archive/v0.1.zip
 $ unzip v0.1.zip
-$ cd moodle4docker-0.1/docker
+$ cd moodle4docker-0.1/docker-compose
 ```
 
 Start the [docker-sync](http://docker-sync.io) container:
