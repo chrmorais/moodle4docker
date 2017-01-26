@@ -23,10 +23,11 @@ services:
       - "8002:8025"
 
   moodle:
-    image: 'pauloamgomes/moodle-php:latest'
+    # image: 'pauloamgomes/moodle-php:7.0'
+    image: 'pauloamgomes/moodle-php:5.6'
     # Moodle version (e.g. 3.1.4, 3.2.1)
     environment:
-      MOODLE_VERSION: "3.1.4"
+      MOODLE_VERSION: "3.2.1"
       MOODLE_HOSTNAME: "localhost"
       MOODLE_DB_NAME: "moodle"
       MOODLE_USER: "admin"
