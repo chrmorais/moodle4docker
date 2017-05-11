@@ -13,7 +13,7 @@ if [ ! -f "$MOODLE_FOLDER/config.php" ]; then
 
   if [ ! -f "$ROOT_FOLDER/v$MOODLE_VERSION.tar.gz" ]; then
     echo "Moodle not found! Downloading from https://github.com/moodle/moodle/archive/v$MOODLE_VERSION.tar.gz"
-    wget https://github.com/moodle/moodle/archive/v$MOODLE_VERSION.tar.gz -P $ROOT_FOLDER
+    wget --no-verbose https://github.com/moodle/moodle/archive/v$MOODLE_VERSION.tar.gz -P $ROOT_FOLDER
   fi
 
   [ -d $MOODLE_FOLDER ] && rm -rf $MOODLE_FOLDER
@@ -21,18 +21,20 @@ if [ ! -f "$MOODLE_FOLDER/config.php" ]; then
 
   tar xfz $ROOT_FOLDER/v$MOODLE_VERSION.tar.gz -C /var/www/moodle && mv $ROOT_FOLDER/moodle-$MOODLE_VERSION $MOODLE_FOLDER
 
-  mysql -h moodle_db -u root $MOODLE_DB_NAME && mysql -h moodle_db -u root -e "DROP DATABASE $MOODLE_DB_NAME" || echo "ok"
+  mysql -h $MOODLE_DB_HOST -u $MOODLE_DB_USER -p$MOODLE_DB_PASS $MOODLE_DB_NAME && mysql -h $MOODLE_DB_HOST -u $MOODLE_DB_USER -p$MOODLE_DB_PASS -e "DROP DATABASE $MOODLE_DB_NAME" || echo "ok"
 
   echo "=================================================="
   echo "Installing moodle... this can take a while."
   echo "=================================================="
   cd /var/www/moodle/html/admin/cli
+  sleep 20
   php install.php --wwwroot="http://$MOODLE_HOSTNAME" \
     --dataroot="$DATA_FOLDER" \
-    --dbhost="moodle_db" \
+    --dbhost="$MOODLE_DB_HOST" \
     --dbtype="mariadb" \
     --dbname="$MOODLE_DB_NAME" \
-    --dbuser="root" \
+    --dbuser="$MOODLE_DB_USER" \
+    --dbpass="$MOODLE_DB_PASS" \
     --fullname="Moodle LMS" \
     --shortname="Moodle" \
     --adminuser="$MOODLE_USER" \

@@ -1,10 +1,8 @@
+version: "2"
+
 syncs:
-  moodle-unison-sync:
+  moodle-sync:
     src: '../www'
-    dest: '/var/www/moodle'
-    sync_args: '-prefer newer'
-    sync_user: 'www-data'
-    sync_userid: '82'
-    sync_host_port: '10871'
     sync_strategy: 'unison'
-    sync_excludes: ['.gitignore', '.git/', 'supervisord.log', 'supervisord.pid']
+    sync_userid: '82'
+    sync_excludes: ['.gitignore', '.git/', '.idea/']

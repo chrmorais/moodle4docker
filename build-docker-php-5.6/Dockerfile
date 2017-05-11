@@ -1,18 +1,21 @@
-FROM alpine:edge
+FROM alpine:3.5
 MAINTAINER pauloamgomes <pauloamgomes@gmail.com>
 
 ENV MOODLE_VERSION ${MOODLE_VERSION}
 ENV MOODLE_HOSTNAME ${MOODLE_HOSTNAME}
 ENV MOODLE_DB_NAME ${MOODLE_DB_NAME}
+ENV MOODLE_DB_USER ${MOODLE_DB_USER}
+ENV MOODLE_DB_PASS ${MOODLE_DB_PASS}
+ENV MOODLE_DB_HOST ${MOODLE_DB_HOST}
 ENV MOODLE_USER ${MOODLE_USER}
 ENV MOODLE_PASS ${MOODLE_PASS}
 
 # Install packages
-RUN echo 'http://alpine.gliderlabs.com/alpine/edge/main' > /etc/apk/repositories && \
-    echo 'http://alpine.gliderlabs.com/alpine/edge/community' >> /etc/apk/repositories && \
-    echo 'http://alpine.gliderlabs.com/alpine/edge/testing' >> /etc/apk/repositories && \
+RUN echo 'http://alpine.gliderlabs.com/alpine/v3.5/main' > /etc/apk/repositories && \
+    echo 'http://alpine.gliderlabs.com/alpine/v3.5/community' >> /etc/apk/repositories && \
+    echo 'http://alpine.gliderlabs.com/alpine/v3.5/releases' >> /etc/apk/repositories
 
-    apk add --update \
+RUN apk add --update \
         bash \
         libressl \
         ca-certificates \
@@ -75,12 +78,9 @@ RUN echo 'http://alpine.gliderlabs.com/alpine/edge/main' > /etc/apk/repositories
         php5-imap \
         php5-soap \
         php5-memcache \
-        php5-redis \
-        php5-xdebug \
         php5-xsl \
         php5-ldap \
         php5-bcmath \
-        php5-memcached \
         php5-apcu \
         php5-pgsql \
         php5-pdo_pgsql \

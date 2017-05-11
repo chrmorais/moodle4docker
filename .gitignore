@@ -5,5 +5,8 @@ www/*
 ._.DS_Store
 .DS_Store
 
+# docker-sync
+docker-compose/.docker-sync
+
 # Unison FS temp file
 .unison.._.DS_Store*
