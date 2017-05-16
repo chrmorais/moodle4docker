@@ -80,6 +80,8 @@ RUN echo 'http://alpine.gliderlabs.com/alpine/edge/main' > /etc/apk/repositories
         php7-apcu \
         php7-intl \
         php7-xmlrpc \
+        php7-simplexml \
+        php7-fileinfo \
 
         # Nginx packages
         nginx \
